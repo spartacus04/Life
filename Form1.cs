@@ -19,9 +19,6 @@ namespace Life
         {
             PreviousText = Convert.ToString(size);
             InitializeComponent();
-#if DEBUG
-            DebugBtn.Visible = true;
-#endif
             GenerateLayout();
         }
 
