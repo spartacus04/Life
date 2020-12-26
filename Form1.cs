@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Life
@@ -15,22 +16,17 @@ namespace Life
             PreviousText = Convert.ToString(size);
             InitializeComponent();
             GenerateLayout();
-#if DEBUG
-            File.Delete("debug.log");
-            File.AppendAllText("debug.log", $"Avvio l'app");
-#endif
         }
 
         public void GenerateLayout()
         {
-#if DEBUG
-            File.AppendAllText("debug.log", $"\nRicreo i pulsanti con dimensione griglia {size}");
-#endif
             for (int i = 0; i < (size * size); i++)
             {
                 CreateButton(400 / size, i, new Point((400 / size) * (i % size), (400 / size) * (int)Math.Floor((double)i / (double)size)), "GridButton" + i);
             }
+
         }
+
 
         public void CreateButton(int size, int tag, Point location, string name)
         {
@@ -49,9 +45,6 @@ namespace Life
 
         private void button1_Click(object sender, EventArgs e)
         {
-#if DEBUG
-            File.AppendAllText("debug.log", "\nCreo nuova generazione...");
-#endif
             bool[,] CurrentCells = new bool[size, size];
             bool[,] NextCells = new bool[size, size];
             foreach (Button button in ButtonPanel.Controls)
@@ -59,14 +52,12 @@ namespace Life
                 CurrentCells[(int)button.Tag % size, (int)Math.Floor((int)button.Tag / (double)size)] = button.BackColor == Color.Black;
             }
 
-            for (int x = 0; x < size; x++)
+            Parallel.For(0, size, x =>
             {
                 for (int y = 0; y < size; y++)
                 {
                     int cella = x * size + y;
-#if DEBUG
-                    File.AppendAllText("debug.log", $"\n[Controllo cella {cella}] ");
-#endif
+
                     int nearcells = 0;
                     if (CheckCell(CurrentCells, x - 1, y - 1, cella))
                         nearcells++;
@@ -84,9 +75,7 @@ namespace Life
                         nearcells++;
                     if (CheckCell(CurrentCells, x + 1, y + 1, cella))
                         nearcells++;
-#if DEBUG
-                    File.AppendAllText("debug.log", $"\n");
-#endif
+
                     if (CurrentCells[x, y])
                     {
                         if (nearcells == 2 || nearcells == 3)
@@ -110,7 +99,7 @@ namespace Life
                         }
                     }
                 }
-            }
+            });
 
             for (int x = 0; x < size; x++)
             {
@@ -142,7 +131,6 @@ namespace Life
                 y = 0;
             }
 
-            File.AppendAllText("debug.log", $" {CurrentCells[x, y]}");
             return CurrentCells[x, y];
         }
 
@@ -197,7 +185,7 @@ namespace Life
             }
         }
 
-        private string PreviousTime = "3";
+        private string PreviousTime = "300";
 
         private void button3_Click(object sender, EventArgs e)
         {
