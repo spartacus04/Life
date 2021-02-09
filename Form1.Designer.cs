@@ -37,6 +37,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // button1
@@ -65,6 +66,9 @@
             // 
             // ButtonPanel
             // 
+            this.ButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonPanel.Location = new System.Drawing.Point(12, 12);
             this.ButtonPanel.Name = "ButtonPanel";
             this.ButtonPanel.Size = new System.Drawing.Size(400, 400);
@@ -83,6 +87,7 @@
             // 
             // button3
             // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Location = new System.Drawing.Point(417, 139);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(143, 23);
@@ -93,6 +98,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(416, 168);
             this.textBox1.MaxLength = 4;
             this.textBox1.Name = "textBox1";
@@ -104,6 +110,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(426, 123);
             this.label1.Name = "label1";
@@ -114,6 +121,10 @@
             // timer1
             // 
             this.timer1.Interval = 300;
+            // 
+            // timer2
+            // 
+            this.timer2.Interval = 150;
             // 
             // Form1
             // 
@@ -127,12 +138,15 @@
             this.Controls.Add(this.ButtonPanel);
             this.Controls.Add(this.NumberTextBox);
             this.Controls.Add(this.button1);
+            this.MinimumSize = new System.Drawing.Size(592, 461);
             this.Name = "Form1";
             this.Text = "Il gioco della vita";
+            this.SizeChanged += Form1_SizeChanged;
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
 
         #endregion
         private System.Windows.Forms.Button button1;
@@ -143,6 +157,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

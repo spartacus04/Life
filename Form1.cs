@@ -16,24 +16,27 @@ namespace Life
             PreviousText = Convert.ToString(size);
             InitializeComponent();
             GenerateLayout();
+            timer2.Tick += Timer2_Tick;
         }
+
+        
 
         public void GenerateLayout()
         {
             for (int i = 0; i < (size * size); i++)
             {
-                CreateButton(400 / size, i, new Point((400 / size) * (i % size), (400 / size) * (int)Math.Floor((double)i / (double)size)), "GridButton" + i);
+                CreateButton(ButtonPanel.Width / size, ButtonPanel.Height / size, i, new Point((ButtonPanel.Width / size) * (i % size), (ButtonPanel.Height / size) * (int)Math.Floor((double)i / (double)size)), "GridButton" + i);
             }
 
         }
 
 
-        public void CreateButton(int size, int tag, Point location, string name)
+        public void CreateButton(int width, int height, int tag, Point location, string name)
         {
             Button button = new Button()
             {
-                Width = size,
-                Height = size,
+                Width = width,
+                Height = height,
                 Tag = tag,
                 Location = location,
                 Name = name,
@@ -54,7 +57,7 @@ namespace Life
 
             Parallel.For(0, size, x =>
             {
-                for (int y = 0; y < size; y++)
+                Parallel.For(0, size, y =>
                 {
                     int cella = x * size + y;
 
@@ -98,7 +101,7 @@ namespace Life
                             NextCells[x, y] = false;
                         }
                     }
-                }
+                });
             });
 
             for (int x = 0; x < size; x++)
@@ -152,7 +155,7 @@ namespace Life
             int value;
             if (int.TryParse(NumberTextBox.Text, out value))
             {
-                if (value > 0 && value < 26)
+                if (value > 0 && value <= 25)
                 {
                     PreviousText = NumberTextBox.Text;
                     size = value;
@@ -221,7 +224,7 @@ namespace Life
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             int value;
-            if (int.TryParse(textBox1.Text, out value))
+            if (int.TryParse(textBox1.Text, out value) && value > 0)
             {
                 PreviousTime = textBox1.Text;
                 timer1.Interval = value;
@@ -237,6 +240,20 @@ namespace Life
                     PreviousTime = textBox1.Text;
                 }
             }
+        }
+
+        private void Form1_SizeChanged(object sender, System.EventArgs e)
+        {
+            timer2.Stop();
+            timer2.Start();
+            
+        }
+
+        private void Timer2_Tick(object sender, EventArgs e)
+        {
+            ButtonPanel.Controls.Clear();
+            GenerateLayout();
+            timer2.Stop();
         }
     }
 }
