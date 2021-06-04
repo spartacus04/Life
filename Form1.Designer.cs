@@ -140,8 +140,7 @@
             this.Controls.Add(this.button1);
             this.MinimumSize = new System.Drawing.Size(592, 461);
             this.Name = "Form1";
-            this.Text = "Il gioco della vita";
-            this.SizeChanged += Form1_SizeChanged;
+            this.Text = "Life - Andrea Bonari 3AI";
             this.ResumeLayout(false);
             this.PerformLayout();
 
